@@ -1,0 +1,15 @@
+.grid {
+  margin-top: 10px;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  align-items: center;
+}
+
+.few-menus {
+  grid-template-columns: repeat(auto-fit, minmax(1fr, 1fr));
+}
+
+.many-menus {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}

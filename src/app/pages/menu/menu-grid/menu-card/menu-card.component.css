@@ -1,0 +1,55 @@
+.card {
+  background-color: rgba(242, 207, 102);
+}
+
+.card .card-data {
+  max-width: 304px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  justify-items: center;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(42, 42, 42, 0.3);
+}
+
+.card .card-data:hover {
+  cursor: pointer;
+  filter: brightness(103%);
+  background-color: rgba(242, 207, 102);
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.20);
+}
+
+.card-img {
+  width: 100px;
+  height: 100px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.75);
+}
+
+.card span.title {
+  padding: 0 5px;
+  display: block;
+  max-width: 200px;
+  text-align: center;
+}
+
+
+
+
+/* FORM STYLES */
+form label {
+  margin: 0;
+}
+
+form label img:hover {
+  cursor: pointer;
+  padding: 5px;
+  background-color: #c0b5b762;
+  filter: grayscale(60%);
+}
+
+form input[type="text"] {
+  width: 120px;
+  text-align: center;
+  border-radius: 5px;
+}

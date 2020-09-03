@@ -1,0 +1,21 @@
+h4 {
+  margin: 50px;
+}
+
+.button {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+@media only screen and (max-width: 1199px) {
+  .container {
+    margin-top: 25px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .container {
+    margin-top: 50px;
+  }
+}

@@ -1,0 +1,18 @@
+<div class="card list-group-item" [ngClass]="{'active': productView == product}" (click)="changeProductView(product)">
+  <img class="card-img" [src]="product.imagePath" [alt]="product.name">
+  <span class="desktop">{{ product.name }}</span>
+  <span class="desktop">R$ {{ product.price | number: '1.2-2' }}</span>
+</div>
+
+
+
+
+<!-- <span class="desktop" style="cursor: default;">
+  <button class="btn">
+    <img src="../../../../../assets/utilities/removeProduct.svg" alt="remove product">
+  </button>
+  <span>{{ productAmount }}</span>
+  <button class="btn">
+    <img src="../../../../../assets/utilities/addProduct.svg" alt="add product">
+  </button>
+</span> -->

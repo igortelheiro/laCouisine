@@ -1,0 +1,14 @@
+<div class="container">
+  <!-- EMPTY MENU LIST -->
+  <h4 *ngIf="menuList.length < 1" class="text-center text-black-50">
+    Não há cardápios disponíveis
+  </h4>
+
+  <app-menu-grid></app-menu-grid>
+
+  <div *ngIf="menuList.length > 0" class="button">
+    <button class="btn btn-primary btn-lg" (click)="onSwitchEditMode()">
+      {{ menuEditMode ? 'Concluir' : 'Editar' }}
+    </button>
+  </div>
+</div>

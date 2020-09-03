@@ -1,0 +1,55 @@
+<div class="modal fade" id="addFormModal" tabindex="-1" aria-labelledby="addFormModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addFormModalLabel">Novo cardápio</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeModal>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- FIXME: ONSUBMIT -->
+      <form [formGroup]="addMenuForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+          <!-- IMAGE -->
+          <div class="form-group">
+            <label for="inputImage" class="col-form-label">Imagem do cardápio:</label>
+            <input
+            type="file"
+            class="form-control"
+            style="padding: 4px 5px;"
+            name="inputImage"
+            formControlName="menuImage"
+            (change)="getImageFile($event.target.files[0])">
+          </div>
+
+          <!-- TITLE -->
+          <div class="form-group">
+            <label for="inputTitle" class="col-form-label">Título do cardápio:</label>
+            <input
+            type="text"
+            class="form-control input"
+            placeholder="Exemplo: Pizzas"
+            name="inputTitle"
+            formControlName="menuTitle">
+
+            <!-- INVALID TITLE -->
+            <span
+            class="form-text text-muted"
+            *ngIf="!addMenuForm.get('menuTitle').valid && addMenuForm.get('menuTitle').dirty"
+            >
+              Favor inserir um nome válido!
+            </span>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onCancelForm()">Cancelar</button>
+          <!-- FIXME: ONSUBMIT -->
+          <button type="submit" class="btn btn-success" data-dismiss="modal" [disabled]="!addMenuForm.valid" (click)="onSubmit()">Adicionar cardápio</button>
+          <!-- <button type="submit" class="btn btn-success" data-dismiss="modal" [disabled]="!addMenuForm.valid">Adicionar cardápio</button> -->
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

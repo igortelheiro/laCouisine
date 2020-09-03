@@ -1,0 +1,45 @@
+<div class="card">
+  <a *ngIf="!cardEditMode" class="card-data" [routerLink]="productLink">
+    <img class="card-img" [src]="imageToBeLoaded" [alt]="menu.title">
+    <span class="card-text title"> {{ menu.title }} </span>
+  </a>
+
+  <!-- EDIT BUTTONS -->
+  <app-menu-card-edit-buttons
+  *ngIf="menuEditMode && !cardEditMode"
+  btnMode="edit"
+  (switchCardEditMode)="onSwitchCardEditMode()"
+  (deleteCard)="onDeleteCard()">
+  </app-menu-card-edit-buttons>
+
+
+
+
+  <form *ngIf="menuEditMode && cardEditMode" [formGroup]="updateCardForm" (ngSubmit)="onUpdateCard()">
+      <a class="card-data">
+        <label for="inputImage" class="card-img">
+          <img class="card-img" [src]="imagePreview || imageToBeLoaded" [alt]="menu.title">
+        </label>
+        <input type="file" id="inputImage" formControlName="inputImage" accept="image/*" style="display: none;" (change)="onImagePreview($event)">
+        <input type="text" class="form-control" id="inputTitle" formControlName="inputTitle">
+      </a>
+
+      <!-- CONFIRM BUTTONS -->
+      <app-menu-card-edit-buttons
+      btnMode="confirm"
+      *ngIf="menuEditMode && cardEditMode"
+      [updateForm]="updateCardForm"
+      [menu]="menu"
+      (cancelUpdateCard)="onCancelUpdateCard()">
+      </app-menu-card-edit-buttons>
+
+      <app-confirm-modal
+      modalTitle="Ops... Você não finalizou sua edição"
+      modalBodyText="Tem certeza que deseja descartar as alterações?"
+      modalCloseButtonText="Descartar"
+      modalConfirmButtonText="Continuar editando"
+      (closeModal)="onCancelUpdateCard()">
+      </app-confirm-modal>
+      <button style="display: none;" type="button" data-toggle="modal" data-target="#confirmModal" #openConfirmModal></button>
+  </form>
+</div>

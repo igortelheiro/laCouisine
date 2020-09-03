@@ -1,0 +1,9 @@
+<div class="card-list list-group list-group-flush">
+  <app-product-card [product]="placeholderCard"></app-product-card>
+
+  <ng-container *ngIf="productList.length > 0">
+    <app-product-card *ngFor="let product of productList"
+    [product]="product">
+    </app-product-card>
+  </ng-container>
+</div>

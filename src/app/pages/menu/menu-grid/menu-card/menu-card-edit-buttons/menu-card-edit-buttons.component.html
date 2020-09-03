@@ -1,0 +1,23 @@
+<div *ngIf="btnMode == 'edit'" class="editButtons">
+  <button (click)="onSwitchCardEditMode()">
+    <img src="../../../../../assets/utilities/pencil.svg" alt="pencil">
+  </button>
+
+  <button (click)="onDeleteCard()">
+    <img src="../../../../../assets/utilities/trash_bin.svg" alt="trash bin">
+  </button>
+</div>
+
+
+<div *ngIf="btnMode == 'confirm'" class="editButtons">
+  <button *ngIf="!isFormDirty()" (click)="onCancelUpdateCard()">
+    <img src="../../../../../assets/utilities/cancel.svg" alt="cancel" style="height: 35px; width: 35px;">
+  </button>
+  <button *ngIf="isFormDirty()" type="button" data-toggle="modal" data-target="#confirmModal">
+    <img src="../../../../../assets/utilities/cancel.svg" alt="cancel" style="height: 35px; width: 35px;">
+  </button>
+
+  <button type="submit" [disabled]="!updateForm.valid" [ngClass]="{'disableSubmitBtn': !updateForm.valid}">
+    <img src="../../../../../assets/utilities/confirm.svg" alt="confirm">
+  </button>
+</div>

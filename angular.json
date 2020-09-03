@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "AppVeneza": {
+    "appveneza": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/AppVeneza",
+            "outputPath": "dist/appveneza",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -62,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "AppVeneza:build"
+            "browserTarget": "appveneza:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "AppVeneza:build:production"
+              "browserTarget": "appveneza:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "AppVeneza:build"
+            "browserTarget": "appveneza:build"
           }
         },
         "test": {
@@ -110,15 +111,19 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "AppVeneza:serve"
+            "devServerTarget": "appveneza:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "AppVeneza:serve:production"
+              "devServerTarget": "appveneza:serve:production"
             }
           }
         }
       }
-    }},
-  "defaultProject": "AppVeneza"
+    }
+  },
+  "defaultProject": "appveneza",
+  "cli": {
+    "analytics": "744b52b7-3d66-4096-a6d4-1c3a518654c6"
+  }
 }

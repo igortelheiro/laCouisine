@@ -1,0 +1,18 @@
+<div class="grid" [ngClass]="{'many-menus': menuList.length > 5, 'few-menus': menuList.length <= 5}">
+  <!-- DISPLAY CARDS -->
+  <app-menu-card
+  *ngFor="let menu of menuList"
+  [menu]="menu"
+  [productLink]="['/cardapio', menu.title]">
+  </app-menu-card>
+
+  <!-- ADD CARD -->
+  <app-menu-card
+    data-toggle="modal"
+    data-target="#addFormModal"
+    *ngIf="!menuEditMode"
+    [menu]="placeholderMenuCard">
+  </app-menu-card>
+
+  <app-menu-addform-modal></app-menu-addform-modal>
+</div>

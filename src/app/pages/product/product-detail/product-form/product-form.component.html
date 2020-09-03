@@ -1,0 +1,94 @@
+  <form [formGroup]="addProductForm" (ngSubmit)="onSubmit()">
+    <!-- IMAGE -->
+    <label for="inputImage" class="card-img-top">
+      <img class="card-img" [src]="imagePreviewUrl || product.imagePath" [alt]="product.name" style="border-radius: 3px;">
+    </label>
+    <input type="file" formControlName="image" id="inputImage" name="inputImage" accept="image/*" style="display: none;" (change)="onImagePreview($event)">
+
+    <!-- NAME AND PRICE -->
+    <div class="card-body">
+      <input type="text" id="inputTitle" class="card-text highlight input-lg" formControlName="name" placeholder="Nome">
+      <span>R$ <input type="number" class="card-text highlight input-sm" formControlName="price" placeholder="0,00" min="0"></span>
+    </div>
+
+    <div class="line">
+      <!-- FINISH BUTTONS -->
+      <div *ngIf="productOnUpdate" class="buttons">
+        <div class="cancel" (click)="onCancelFormChanges(true)">
+          <button class="btn btn-danger desktop">Descartar</button>
+          <button class="btn btn-danger mobile"><img src="../../../../../assets/utilities/cancel_white.svg" alt="descartar"></button>
+        </div>
+
+        <div class="save">
+          <button class="btn btn-success desktop" type="submit" [disabled]="!addProductForm.valid">Salvar</button>
+          <button class="btn btn-success mobile" type="submit" [disabled]="!addProductForm.valid"><img src="../../../../../assets/utilities/confirm_white.svg" alt="save"></button>
+        </div>
+      </div>
+
+      <!-- PRODUCTION INPUT -->
+      <div class="production">
+        <img src="../../../../../assets/utilities/watch.svg" alt="relógio" style="margin-right: 5px;">
+        <input type="number" id="inputProdTime" class="input-sm" formControlName="productionTime" min="0" max="60" placeholder="10">
+        <select name="productionTimeUnit" class="input-sm" formGroupName="productionTimeUnit" id="timeUnit">
+          <option value="min">min</option>
+          <option value="hr">h</option>
+          <option value="dia">dia</option>
+        </select>
+      </div>
+    </div>
+
+
+
+    <!-- INGREDIENTS -->
+    <div class="ingredients">
+      <img src="../../../../assets/utilities/ingredientList.svg" alt="ingredient list">
+      Ingredientes:
+
+      <ol>
+        <li *ngFor="let ingredient of product.ingredients">
+          <button class="btn btn-danger ingredient"><img src="../../../../../assets/utilities/trash_bin_white.svg" alt="deletar ingrediente"></button>
+          {{ ingredient.name }}
+          {{ ingredient.amount }}
+          {{ ingredient.measure }}
+        </li>
+
+        <!-- NEW INGREDIENT INPUT -->
+        <li>
+          <button class="btn btn-success ingredient"><img src="../../../../../assets/utilities/add.svg" alt="adicionar ingrediente"></button>
+          <input type="text" class="input-md" placeholder="Ingrediente">
+          <input type="number" min="0" max="1000" class="input-sm" placeholder="500">
+          <select name="measure" id="measure" class="input-sm">
+            <option value="g">g</option>
+            <option value="kg">Kg</option>
+            <option value="ml">ml</option>
+            <option value="l">L</option>
+          </select>
+        </li>
+      </ol>
+    </div>
+
+
+    <!-- FINISH ADDING BUTTONS -->
+    <div *ngIf="!productOnUpdate" class="buttons">
+      <div class="cancel" (click)="onCancelFormChanges()">
+        <button class="btn btn-danger desktop">Cancelar</button>
+        <button class="btn btn-danger mobile"><img src="../../../../../assets/utilities/cancel_white.svg" alt="cancel"></button>
+      </div>
+
+      <div class="save">
+        <button class="btn btn-success desktop" type="submit" [disabled]="!addProductForm.valid">Adicionar</button>
+        <button class="btn btn-success mobile" type="submit" [disabled]="!addProductForm.valid"><img src="../../../../../assets/utilities/save_white.svg" alt="save"></button>
+      </div>
+    </div>
+  </form>
+
+
+
+<app-confirm-modal
+  modalTitle="Alterações pendentes"
+  modalBodyText="Oops.. Tem certeza que quer descartar suas alterações?"
+  modalCloseButtonText="Descartar"
+  modalConfirmButtonText="Continuar editando"
+  (closeModal)="onCancelFormChanges()">
+</app-confirm-modal>
+<button style="display: none;" type="button" data-toggle="modal" data-target="#confirmModal" #openConfirmModal></button>

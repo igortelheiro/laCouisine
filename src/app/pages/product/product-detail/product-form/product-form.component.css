@@ -1,0 +1,141 @@
+form, .card {
+  width: 28vw;
+}
+
+
+.card-body {
+  background-color: #f2f2f2;
+  border-radius: 3px;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-sm {
+  width: 5vw;
+}
+.input-md {
+  width: 10vw;
+}
+.input-lg {
+  width: 15vw;
+}
+
+.line {
+  margin: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+
+
+.buttons {
+  margin: 15px 0;
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+}
+
+
+span {
+  align-self: center;
+  font-size: 20px;
+}
+
+
+.highlight {
+  font-weight: 400;
+  font-size: 1.15rem;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+
+/* FORM STYLES */
+form label {
+  margin: 0;
+}
+
+form label img:hover {
+  cursor: pointer;
+  padding: 5px;
+  background-color: #c0b5b762;
+  filter: grayscale(60%);
+}
+
+form .btn.ingredient img {
+  width: 1.2vw;
+  height: 1.2vw;
+}
+
+
+
+
+@media only screen and (max-width: 749px) {
+  form, .card {
+    width: 50vw;
+  }
+
+  .card-body {
+    display: grid;
+    gap: 10px;
+  }
+
+  .line {
+    display: block;
+  }
+
+  .input-sm {
+    width: 15vw;
+  }
+  .input-md {
+    width: 25vw;
+  }
+  .input-lg {
+    width: 35vw;
+  }
+
+  form .btn.ingredient img {
+    width: 3vw;
+    height: 3vw;
+  }
+
+  ol {
+    padding: 0;
+  }
+}
+
+
+@media only screen and (min-width: 850px) and (max-width: 1199px) {
+  form, .card {
+    width: 30vw;
+  }
+
+  .card-img-top {
+    width: 100%;
+    height: 100%;
+  }
+
+  .card-body {
+    display: grid;
+    gap: 10px;
+  }
+
+  .line {
+    display: block;
+  }
+
+  .input-sm {
+    width: 6vw;
+  }
+  .input-md {
+    width: 11vw;
+  }
+  .input-lg {
+    width: 16vw;
+  }
+
+  form .btn.ingredient img {
+    width: 2vw;
+    height: 2vw;
+  }
+}

@@ -1,0 +1,57 @@
+.carousel-inner {
+  overflow: visible !important;
+}
+
+.carousel-inner img {
+  /* width: 70%; */
+  margin: auto;
+}
+
+/* CAROUSEL BACKGROUND BUTTONS */
+/* a, a:hover {
+  background-color: #f2f2f2;
+} */
+
+.carousel-indicators .active {
+  filter: brightness(300%);
+  background-color: #A60303;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 100px;
+  width: 100px;
+  float: left;
+  outline: black;
+  background-size: 100%, 100%;
+  background-image: none;
+}
+.carousel-control-next-icon:after
+{
+  content: '>';
+  font-size: 55px;
+  color: #8C4E03;
+}
+
+.carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 55px;
+  color: #8C4E03;
+}
+
+
+@media only screen and (max-width: 1199px) {
+  .carousel-inner img {
+    width: 100%;
+  }
+  a, a:hover {
+    background-color: transparent;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .carousel-inner img {
+    width: 70%;
+    margin: auto;
+  }
+}

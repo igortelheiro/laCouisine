@@ -1,0 +1,19 @@
+.card-list {
+  width: 28vw;
+  padding-right: 5px;
+}
+
+
+@media only screen and (max-width: 849px) {
+  .card-list {
+    width: 20vw;
+    display: flex;
+  }
+}
+
+@media only screen and (min-width: 850px) and (max-width: 1364px) {
+  .card-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}

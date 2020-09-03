@@ -1,0 +1,43 @@
+<div *ngIf="product.name !== 'Adicionar produto' && !productOnUpdate">
+  <div class="card">
+    <img class="card-img-top" [src]="product.imagePath" [alt]="product.name" style="border-radius: 3px;">
+    <div class="card-body">
+      <span class="card-text highlight">{{ product.name }}</span>
+      <span class="card-text highlight">R$ {{ product.price | number: '1.2-2' }}</span>
+    </div>
+  </div>
+
+  <div class="line">
+    <div class="buttons">
+      <div class="edit" (click)="onSwitchUpdateCard()">
+        <button class="btn btn-warning desktop">Editar</button>
+        <button class="btn btn-warning mobile"><img src="../../../../assets/utilities/pencil.svg" alt="editar"></button>
+      </div>
+
+      <div class="delete" (click)="onDeleteProduct()">
+        <button class="btn btn-danger desktop">Remover</button>
+        <button class="btn btn-danger mobile"><img src="../../../../assets/utilities/trash_bin.svg" alt="apagar"></button>
+      </div>
+    </div>
+
+    <span><img src="../../../../assets/utilities/watch.svg" alt="relógio" style="margin-right: 5px;">{{ product.productionTime }} {{ product.productionTimeUnit }}</span>
+  </div>
+
+  <div class="ingredients">
+    <img src="../../../../assets/utilities/ingredientList.svg" alt="ingredient list">
+    Ingredientes:
+
+    <ol>
+      <li *ngFor="let ingredient of product.ingredients">
+        {{ ingredient.name }}
+        {{ ingredient.amount }}
+        {{ ingredient.measure }}
+      </li>
+    </ol>
+  </div>
+</div>
+
+
+
+<app-product-form *ngIf="product.name === 'Adicionar produto'" mode="create"></app-product-form>
+<app-product-form *ngIf="productOnUpdate" mode="update"></app-product-form>
