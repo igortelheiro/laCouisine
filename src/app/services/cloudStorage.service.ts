@@ -1,3 +1,4 @@
+import { ErrorService } from './error.service';
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase'
 
@@ -7,21 +8,34 @@ import * as firebase from 'firebase'
 export class CloudStorageService {
   private storage = firebase.storage();
 
-  constructor() { }
+  constructor(private errorService: ErrorService) { }
 
-  uploadImage(path: string, image: File) {
-    this.storage.ref(path).put(image);
+
+  uploadImage(path: string, image: File): any {
+    return this.storage.ref(path).put(image)
+      .catch(error => {
+        console.error('error uploading image: ', error);
+        // this.errorService.handleError(error);
+    });
   }
 
 
   async downloadImage(path: string): Promise<string> {
     let imageUrl: string;
-    await this.storage.refFromURL(`gs://massas-veneza.appspot.com/${path}`).getDownloadURL().then(url => imageUrl = url);
+    await this.storage.ref(path).getDownloadURL().then(url => imageUrl = url)
+      .catch(error => {
+        console.error('error downloading image: ', error);
+        // this.errorService.handleError(error);
+      });
     return imageUrl;
   }
 
 
   deleteImage(path: string) {
-    this.storage.refFromURL(`gs://massas-veneza.appspot.com/${path}`).delete();
+    this.storage.ref(path).delete()
+      .catch(error => {
+        console.error('error deleting image: ', error);
+        // this.errorService.handleError(error);
+      });
   }
 }

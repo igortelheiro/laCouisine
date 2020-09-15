@@ -1,8 +1,9 @@
 <div class="card">
   <a *ngIf="!cardEditMode" class="card-data" [routerLink]="productLink">
-    <img class="card-img" [src]="imageToBeLoaded" [alt]="menu.title">
+    <img class="card-img" [src]="menu.imageUrl || menu.imagePath" [alt]="menu.title">
     <span class="card-text title"> {{ menu.title }} </span>
   </a>
+
 
   <!-- EDIT BUTTONS -->
   <app-menu-card-edit-buttons
@@ -14,11 +15,10 @@
 
 
 
-
   <form *ngIf="menuEditMode && cardEditMode" [formGroup]="updateCardForm" (ngSubmit)="onUpdateCard()">
       <a class="card-data">
         <label for="inputImage" class="card-img">
-          <img class="card-img" [src]="imagePreview || imageToBeLoaded" [alt]="menu.title">
+          <img class="card-img" [src]="imagePreview || menu.imageUrl || menu.imagePath" [alt]="menu.title">
         </label>
         <input type="file" id="inputImage" formControlName="inputImage" accept="image/*" style="display: none;" (change)="onImagePreview($event)">
         <input type="text" class="form-control" id="inputTitle" formControlName="inputTitle">

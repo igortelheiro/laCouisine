@@ -15,13 +15,13 @@ export class ProductService {
 
   constructor() { }
 
-  changeProductView(product: Product) {
+  changeProductAtView(product: Product) {
     this.productOnView = product;
-    this.productOnViewChanges.next(product);
+    this.productOnViewChanges.next(this.productOnView);
   }
 
-  changeProductUpdate(product: Product) {
+  changeProductOnUpdate(product: Product) {
     this.productOnUpdate = product;
-    this.productOnUpdateChanges.next(product);
+    this.productOnUpdateChanges.next(this.productOnUpdate);
   }
 }

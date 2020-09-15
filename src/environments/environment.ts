@@ -5,15 +5,15 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyDCU39tRO1tGVD7QGn9rE-Y4jOVfhOOkLY",
-    authDomain: "massas-veneza.firebaseapp.com",
-    databaseURL: "https://massas-veneza.firebaseio.com",
-    projectId: "massas-veneza",
-    storageBucket: "massas-veneza.appspot.com",
-    messagingSenderId: "1023322994617",
-    appId: "1:1023322994617:web:94678afcba1792d12b6868",
-    measurementId: "G-QT1KQG7703"
-  }
+    apiKey: "AIzaSyA1KfOm_zBwMxcdPK9ookrTw-pebat6rak",
+    authDomain: "lacuisine-2000.firebaseapp.com",
+    databaseURL: "https://lacuisine-2000.firebaseio.com",
+    projectId: "lacuisine-2000",
+    storageBucket: "gs://lacuisine-platform.appspot.com",
+    messagingSenderId: "817462894813",
+    appId: "1:817462894813:web:8e55ee97adac0f900e3b34",
+    measurementId: "G-Z0KJ62Q1W4"
+  },
 };
 
 /*

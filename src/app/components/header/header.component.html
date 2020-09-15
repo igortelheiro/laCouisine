@@ -1,13 +1,13 @@
 <nav class="navbar navbar-expand-xl navbar-light bg-light fixed-top">
-  <app-brand [frameSize]="'mobile'"></app-brand>
+  <app-brand class="mobile"></app-brand>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item slide-top active">
+      <ul class="navbar-nav ">
+        <li class="nav-item slide-top">
           <a class="nav-link" routerLink="/">Inicio</a>
         </li>
         <li class="nav-item slide-top">
@@ -18,12 +18,14 @@
         </li>
       </ul>
 
-      <app-brand [frameSize]="'desktop'"></app-brand>
+      <app-brand class="desktop m-auto" style="justify-self: center;"></app-brand>
 
-      <ul class="navbar-nav ml-auto justify-content-end">
-        <li class="nav-item slide-top"><a class="nav-link" routerLink="makeOrder" id="fazerpedido-btn">Fazer pedido</a></li>
-        <li class="nav-item slide-top"><a class="nav-link" routerLink="myorders">Meus pedidos</a></li>
-        <li class="nav-item slide-top"><a class="nav-link" routerLink="myaccount" (click)="login()"><img class="avatar" height="50px" [src]="avatarPath" alt="user avatar"></a></li>
+      <ul class="navbar-nav justify-content-end">
+        <!-- <li class="nav-item slide-top"><a class="nav-link" routerLink="makeOrder" id="fazerpedido-btn">Fazer pedido</a></li> -->
+        <li class="nav-item slide-top"><a class="nav-link" routerLink="myorders">Pedidos em andamento</a></li>
+        <li class="nav-item slide-top">
+          <a class="nav-link" routerLink="myaccount" (click)="login()"><img class="avatar" height="50px" [src]="avatarPath" alt="user avatar"></a>
+        </li>
       </ul>
     </div>
 </nav>

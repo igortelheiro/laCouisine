@@ -30,16 +30,17 @@ a:hover {
   width: 50px;
   height: 50px;
   border: 2px solid #592202;
-  border-radius: 100%;
+  border-radius: 30px;
 }
 
 @media only screen and (max-width: 1199px) {
   .nav-item {
-    margin: 20px 0;
+    margin: 10px auto;
   }
 }
+
 @media only screen and (min-width: 1200px) {
-  nav ul {
+  ul {
     width: 500px;
   }
 }

@@ -12,6 +12,6 @@
   <div class="windows">
     <app-product-card-list></app-product-card-list>
 
-    <app-product-detail></app-product-detail>
+    <app-product-detail *ngIf="productView"></app-product-detail>
   </div>
 </div>

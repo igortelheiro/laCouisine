@@ -37,6 +37,7 @@ export class MenuService {
 
   removeCardOnEditMode() {
     this.cardOnEditMode = null;
+    this.cardOnEditModeChanged.next(null);
   }
 
 }

@@ -7,8 +7,8 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
+
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

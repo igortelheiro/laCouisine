@@ -8,11 +8,11 @@
 
   <!-- ADD CARD -->
   <app-menu-card
-    data-toggle="modal"
-    data-target="#addFormModal"
-    *ngIf="!menuEditMode"
-    [menu]="placeholderMenuCard">
+  *ngIf="!menuEditMode || menuList.length < 1"
+  data-toggle="modal"
+  data-target="#addFormModal"
+  [menu]="placeholderMenuCard">
   </app-menu-card>
 
-  <app-menu-addform-modal></app-menu-addform-modal>
+  <app-menu-card-add></app-menu-card-add>
 </div>

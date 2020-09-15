@@ -1,14 +1,14 @@
 import { Subscription } from 'rxjs';
-import { Menu } from './../../../models/menu.model';
+import { Menu } from '../../../models/menu.model';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { MenuDataService } from '../../../services/menu-data.service';
 
 @Component({
-  selector: 'app-menu-addform-modal',
-  templateUrl: './menu-addform-modal.component.html',
-  styleUrls: ['./menu-addform-modal.component.css']
+  selector: 'app-menu-card-add',
+  templateUrl: './menu-card-add.component.html',
+  styleUrls: ['./menu-card-add.component.css']
 })
 export class AddMenuFormModalComponent implements OnInit, OnDestroy {
   @ViewChild('closeModal') closeModal: ElementRef;

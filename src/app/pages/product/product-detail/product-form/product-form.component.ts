@@ -4,7 +4,9 @@ import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { Product } from '../../../../models/product.model';
+import { Ingredient } from './../../../../models/ingredient.mode';
 import { ProductService } from '../../../../services/product.service';
+import { ProductDataService } from 'src/app/services/product-data.service';
 
 @Component({
   selector: 'app-product-form',
@@ -16,7 +18,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   @Input('mode') mode: string;
 
   product: Product;
-  productChangesSub: Subscription;
+  productViewChangesSub: Subscription;
 
   productOnUpdate: Product;
   productOnUpdateChangesSub: Subscription;
@@ -25,40 +27,89 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   imageInputFile: File;
 
   addProductForm: FormGroup;
+  addIngredientForm: FormGroup;
+  ingredientList: Ingredient[] = [];
 
-  constructor(private productService: ProductService, private _DomSanitizationService: DomSanitizer) { }
+  constructor(private productService: ProductService, private _DomSanitizationService: DomSanitizer, private productDataService: ProductDataService) { }
 
   ngOnInit(): void {
-     this.product = this.productService.productOnView;
-     this.productChangesSub = this.productService.productOnViewChanges.subscribe(newProduct => this.product = newProduct);
+    this.product = this.productService.productOnView;
+    this.productViewChangesSub = this.productService.productOnViewChanges.subscribe(newProduct => this.product = newProduct);
 
-     this.productOnUpdate = this.productService.productOnUpdate;
-     this.productOnUpdateChangesSub = this.productService.productOnUpdateChanges.subscribe(newProduct => this.productOnUpdate = newProduct);
+    this.productOnUpdate = this.productService.productOnUpdate;
+    this.productOnUpdateChangesSub = this.productService.productOnUpdateChanges.subscribe(newProduct => this.productOnUpdate = newProduct);
 
-     if (this.mode === 'update') {
-      this.addProductForm = new FormGroup({
-        image: new FormControl(null),
-        name: new FormControl(this.product.name , {validators: [Validators.required, Validators.minLength(3)]}),
-        price: new FormControl(this.product.price , {validators: [Validators.required, Validators.minLength(2), Validators.min(1)]}),
-        productionTime: new FormControl(this.product.productionTime , {validators: [Validators.required, Validators.minLength(2), Validators.min(1)]}),
-        productionTimeUnit: new FormControl(this.product.productionTimeUnit, {validators: [Validators.required, Validators.minLength(2), Validators.min(1)]})
-      });
-    }
-    else {
-      this.addProductForm = new FormGroup({
-        image: new FormControl(null, {validators: Validators.required}),
-        name: new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]}),
-        price: new FormControl(null, {validators: [Validators.required, Validators.minLength(2), Validators.min(1)]}),
-        productionTime: new FormControl(null, {validators: [Validators.required, Validators.minLength(2), Validators.min(1)]}),
-        productionTimeUnit: new FormControl('dia', {validators: [Validators.required, Validators.minLength(2), Validators.min(1)]})
-      });
+    //TODO: SORT ALPHABETICALY
+    this.ingredientList.push(...this.product.ingredients.sort((a, b) => a.name.localeCompare(b.name)));
+    this.buildProductForm(this.mode === 'update' ? false : true);
+    this.buildaddIngredientForm();
+  }
+
+
+
+  buildProductForm(fromScratch?: boolean) {
+    this.addProductForm = new FormGroup({
+      image: new FormControl(null),
+      name: new FormControl(!fromScratch ? this.product.name : null, {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)]}),
+      price: new FormControl(!fromScratch ? this.product.price : null, {validators: [Validators.required, Validators.min(0.1)]}),
+      productionTime: new FormControl(!fromScratch ? this.product.productionTime : null, {validators: [Validators.required, Validators.minLength(2), Validators.min(1), Validators.max(60)]}),
+      productionTimeUnit: new FormControl(!fromScratch ? this.product.productionTimeUnit : 'min', {validators: Validators.required})
+    })
+  }
+  buildaddIngredientForm() {
+    this.addIngredientForm = new FormGroup({
+      name: new FormControl(null, {validators: [Validators.required, Validators.minLength(3), Validators.maxLength(16)]}),
+      amount: new FormControl(null, {validators: [Validators.required, Validators.min(1), Validators.max(999)]}),
+      measure: new FormControl('g', {validators: Validators.required})
+   })
+  }
+
+
+
+  onAddIngredient() {
+    if (this.addIngredientForm.valid && !this.ingredientList.find(ingredient => ingredient.name === this.addIngredientForm.get('name').value)) {
+      this.ingredientList.push({
+        name: this.addIngredientForm.get('name').value,
+        amount: this.addIngredientForm.get('amount').value,
+        measure: this.addIngredientForm.get('measure').value
+      })
+      this.addIngredientForm.reset();
+      this.addIngredientForm.get('measure').setValue('g');
     }
   }
+  delIngredient(ingredient: Ingredient) {
+    this.ingredientList = this.ingredientList.filter(ingredientItem => ingredientItem !== ingredient);
+  }
+
 
 
   onSubmit() {
-    console.log('submited');
+    let newProduct: Product = {
+      name: this.addProductForm.get('name').value,
+      imagePath: 'added on the service',
+      price: this.addProductForm.get('price').value,
+      productionTime: this.addProductForm.get('productionTime').value,
+      productionTimeUnit: this.addProductForm.get('productionTimeUnit').value,
+      ingredients: this.ingredientList,
+    }
+
+    this.productDataService.addProduct(newProduct, this.imageInputFile);
   }
+
+
+  //TODO: UPDATE
+  onUpdateProduct() {
+    let prodForm = this.addProductForm;
+    let imageInput = prodForm.get('image');
+    let nameInput = prodForm.get('name');
+    let priceInput = prodForm.get('price');
+    let prodTimeInput = prodForm.get('productionTime');
+    let prodTimeUnitInput = prodForm.get('productionTimeUnit');
+
+    // if (imageInput)
+      // this.
+  }
+
 
 
   onImagePreview(event: Event) {
@@ -76,18 +127,19 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       this.openConfirmModal.nativeElement.click();
     }
     else {
-      this.productService.changeProductUpdate(null);
+      this.productService.changeProductOnUpdate(null);
       this.imagePreviewUrl = null;
+      this.ingredientList = null;
       this.addProductForm.reset();
+      // this.productService.changeProductAtView(this.productDataService.productList[0]);
     }
   }
-
 
 
 
   ngOnDestroy() {
     this.onCancelFormChanges();
 
-    this.productChangesSub.unsubscribe();
+    this.productViewChangesSub.unsubscribe();
   }
 }

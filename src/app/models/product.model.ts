@@ -13,5 +13,9 @@ export class Product {
     public productionTimeUnit: string,
 
     public ingredients: Ingredient[],
+
+    public imageUrl?: string,
+
+    public id?: string,
   ) {}
 }

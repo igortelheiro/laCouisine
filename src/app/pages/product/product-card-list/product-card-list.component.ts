@@ -1,5 +1,6 @@
-import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import { Product } from 'src/app/models/product.model';
 import { ProductDataService } from 'src/app/services/product-data.service';
 
@@ -28,8 +29,6 @@ export class ProductCardListComponent implements OnInit, OnDestroy {
     this.productList = this.productDataService.productList;
     this.productListChangesSub = this.productDataService.productListChanges.subscribe(newProductList => this.productList = newProductList);
   }
-
-
 
   ngOnDestroy() {
     this.productListChangesSub.unsubscribe();

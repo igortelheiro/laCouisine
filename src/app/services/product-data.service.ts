@@ -1,61 +1,74 @@
+import { ProductService } from './product.service';
+import { AuthService } from './auth.service';
+import { CloudStorageService } from './cloudStorage.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { Product } from 'src/app/models/product.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductDataService {
 
-  productList: Product[] = [
-    {name: 'Torta mármore',
-    imagePath: '../../../../assets/cardapios/torta_marmore.jpg',
-    price: 30,
-    productionTime: 30,
-    productionTimeUnit: 'min',
-    ingredients: [{name: 'mousse', amount: 200, measure: 'g'}],},
-
-    {name: 'Torta de maçã',
-    imagePath: '../../../../assets/cardapios/bolo_confeitado.jpg',
-    price: 20.50,
-    productionTime: 45,
-    productionTimeUnit: 'min',
-    ingredients: [{name: 'maçã', amount: 200, measure: 'g'}],},
-
-    {name: 'Brigadeiro',
-    imagePath: '../../../../assets/cardapios/doce.jpg',
-    price: 8,
-    productionTime: 1,
-    productionTimeUnit: 'hr',
-    ingredients: [{name: 'chocolate', amount: 200, measure: 'g'}],},
-
-    {name: 'Chocotone',
-    imagePath: '../../../../assets/cardapios/chocotone.jpg',
-    price: 25,
-    productionTime: 1,
-    productionTimeUnit: 'dia',
-    ingredients: [{name: 'chocolate', amount: 500, measure: 'kg'}],},
-
-    {name: 'Açaí',
-    imagePath: '../../../../assets/cardapios/acai.jpg',
-    price: 15.5,
-    productionTime: 2,
-    productionTimeUnit: 'hr',
-    ingredients: [{name: 'acai', amount: 200, measure: 'g'}],},
-  ];
+  productList: Product[];
   productListChanges = new Subject<Product[]>();
 
-  constructor(private http: HttpClient) { }
+  private clientID = this.authService.clientID;
+  private defaultURL = `https://lacuisine-platform.firebaseio.com/${this.clientID}/produtos`
+
+  constructor(
+    private http: HttpClient,
+    private cloudStorageService: CloudStorageService,
+    private productService: ProductService,
+    private authService: AuthService) { }
+
+
 
   fetchProducts() {
-    this.productListChanges.next(this.productList);
+    this.http.get<{ [key: string]: Product }>(`${this.defaultURL}.json`)
+    .pipe(map(responseData => {
+      const productsArray: Product[] = [];
+      for (const key in responseData) {
+        this.cloudStorageService.downloadImage(responseData[key].imagePath).then(downloadImageUrl => {
+          responseData[key].imageUrl = downloadImageUrl;
+          productsArray.push({ ...responseData[key], id: key });
+        })
+      };
+      //TODO: SORT ALPHABBETICALLY
+      return productsArray.sort((a, b) => a.name.localeCompare(b.name));
+    })).subscribe(productsArray => {
+        this.productList = productsArray;
+        this.productListChanges.next(this.productList);
+        setTimeout(() => this.productService.changeProductAtView(this.productList[0]), 500);
+    })
   }
 
-  addProduct(product: Product) {
-    this.http.post('https://massas-veneza.firebaseio.com/produtos', product).subscribe(response => {
-      console.log(response);
-    })
+
+
+  addProduct(product: Product, image: File) {
+    if (!this.productList.find(productItem => productItem.name === product.name)) {
+      product.imagePath = `${this.clientID}/produtos/${product.name}`;
+
+      this.cloudStorageService.uploadImage(product.imagePath, image);
+
+      this.http.post(`${this.defaultURL}.json`, product).subscribe(() => this.fetchProducts());
+      // this.http.post(`${this.defaultURL}.json`, product).subscribe(() => setTimeout(() => this.fetchProducts(), 1000));
+    }
+  }
+
+
+
+  updateProduct(product: Product, changes: {}) {
+
+  }
+
+
+
+  deleteMenu(product: Product) {
+    this.cloudStorageService.deleteImage(product.imagePath);
+    this.http.delete(`${this.defaultURL}/${product.id}.json`).subscribe(() => this.fetchProducts());
   }
 }

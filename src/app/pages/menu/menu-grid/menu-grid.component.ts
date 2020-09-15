@@ -19,7 +19,8 @@ export class MenuGridComponent implements OnInit, OnDestroy {
 
   placeholderMenuCard: Menu = {
     title: 'Adicionar Cardápio',
-    imagePath: null
+    imagePath: '../../../../assets/utilities/img_placeholder.png',
+    imageUrl: null
   }
 
   constructor(private menuService: MenuService, private menuDataService: MenuDataService) { }

@@ -2,7 +2,6 @@
   font-family: "Poppins";
   font-style: normal;
   font-weight: normal;
-  font-size: 1rem;
   list-style: none;
   overflow-x: hidden;
   -webkit-user-drag: none;
@@ -13,55 +12,44 @@
   -webkit-user-select: text;
 }
 
-html, body {
-  height: 100%;
-}
-
+/* HEADER PADDING */
 body {
   padding-top: 95px;
 }
 
-main {
-  min-height: 80vh;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 30px;
-}
-
-a {
-  color: black!important;
-  text-decoration: none!important;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  overflow-y: hidden;
+a, a:hover {
+  color: black;
+  text-decoration: none;
 }
 
 
 
-@media only screen and (max-width: 749px) {
+
+@media only screen and (max-width: 1199px) {
+  .mobile {
+    display: flow-root;
+  }
+  .desktop {
+    display: none;
+  }
+
   ::-webkit-scrollbar {
     display: none;
   }
 }
 
-@media only screen and (max-width: 1199px) {
+@media only screen and (min-width: 1200px) {
   .mobile {
-    display: flow-root!important;
+    display: none;
   }
   .desktop {
-    display: none!important;
+    display: flow-root;
   }
 }
 
-@media only screen and (min-width: 1200px) {
-  .mobile {
-    display: none!important;
-  }
-  .desktop {
-    display: flow-root!important;
-  }
-}
+
+
+
 
 
 /* ----------------------------------------------
@@ -89,9 +77,6 @@ h1, h2, h3, h4, h5, h6 {
 .slide-top:hover {
   animation: slide-top 0.3s ease-out both;
 }
-
-
-
 
 
 

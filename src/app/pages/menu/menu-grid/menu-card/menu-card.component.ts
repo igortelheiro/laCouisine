@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { Menu } from '../../../../models/menu.model';
 import { MenuService } from '../../../../services/menu.service';
 import { MenuDataService } from '../../../../services/menu-data.service';
-import { CloudStorageService } from '../../../../services/cloudStorage.service';
 
 @Component({
   selector: 'app-menu-card',
@@ -20,7 +19,6 @@ export class MenuCardComponent implements OnInit, OnDestroy {
   @Input() productLink: Array<[]>;
 
   @Input() menu: Menu;
-  imageToBeLoaded: string;
 
   imagePreview: SafeUrl;
   imageInputFile: File;
@@ -38,7 +36,6 @@ export class MenuCardComponent implements OnInit, OnDestroy {
   constructor(
     private menuService: MenuService,
     private menuDataService: MenuDataService,
-    private cloudStorageService: CloudStorageService,
     private _DomSanitizationService: DomSanitizer) { }
 
 
@@ -55,22 +52,10 @@ export class MenuCardComponent implements OnInit, OnDestroy {
         this.openConfirmModal.nativeElement.click();
     });
 
-    this.defineImageToBeLoaded();
-
     this.updateCardForm = new FormGroup({
       inputImage: new FormControl(null),
       inputTitle: new FormControl(this.menu.title, {validators: [Validators.required, Validators.minLength(3)]})
     })
-  }
-
-
-
-  //DEFINE CARD IMAGE
-  async defineImageToBeLoaded() {
-    if (!this.menu.imagePath)
-      this.imageToBeLoaded = '../../../../assets/utilities/img_placeholder.png';
-    else
-      this.imageToBeLoaded = await this.cloudStorageService.downloadImage(this.menu.imagePath);
   }
 
 
@@ -92,14 +77,16 @@ export class MenuCardComponent implements OnInit, OnDestroy {
 
 
   onUpdateCard() {
-  let inputImage = this.updateCardForm.get('inputImage');
-  let inputTitle = this.updateCardForm.get('inputTitle');
+    let inputTitle = this.updateCardForm.get('inputTitle');
+    let inputImage = this.updateCardForm.get('inputImage');
 
     if (this.updateCardForm.dirty && this.updateCardForm.valid) {
-      if (inputImage.dirty)
-        this.menuDataService.updateMenu(this.menu, {imageFile: this.imageInputFile});
       if (inputTitle.dirty && inputTitle.value !== this.menu.title)
         this.menuDataService.updateMenu(this.menu, {title: inputTitle.value});
+      if (inputImage.dirty) {
+        let menuTitle = this.menu.title !== inputTitle.value ? inputTitle.value : null;
+        this.menuDataService.updateMenu(this.menu, {title: menuTitle, imageFile: this.imageInputFile});
+      }
     }
     this.onCancelUpdateCard();
   }
@@ -108,10 +95,10 @@ export class MenuCardComponent implements OnInit, OnDestroy {
 
   onCancelUpdateCard() {
     this.cardEditMode = false;
-    this.imagePreview = null;
     this.menuService.removeCardOnEditMode();
+    this.imagePreview = null;
 
-    //RESETE FORM
+    //RESET FORM
     this.updateCardForm.reset();
     this.updateCardForm.get('inputImage').setValue(null);
     this.updateCardForm.get('inputTitle').setValue(this.menu.title);
@@ -121,6 +108,9 @@ export class MenuCardComponent implements OnInit, OnDestroy {
 
   onDeleteCard() {
     this.menuDataService.deleteMenu(this.menu);
+
+    if (this.menuDataService.menuList.length <= 1)
+      this.menuService.switchEditMode();
   }
 
 

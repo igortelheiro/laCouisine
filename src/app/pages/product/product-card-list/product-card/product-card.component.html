@@ -1,7 +1,7 @@
 <div class="card list-group-item" [ngClass]="{'active': productView == product}" (click)="changeProductView(product)">
-  <img class="card-img" [src]="product.imagePath" [alt]="product.name">
-  <span class="desktop">{{ product.name }}</span>
-  <span class="desktop">R$ {{ product.price | number: '1.2-2' }}</span>
+  <img class="card-img" [src]="product.imageUrl || product.imagePath" [alt]="product.name">
+  <span class="desktop text-center">{{ product.name }}</span>
+  <span *ngIf="product.price > 0" class="desktop">R$ {{ product.price | number: '1.2-2' }}</span>
 </div>
 
 

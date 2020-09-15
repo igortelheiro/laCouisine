@@ -37,12 +37,8 @@ export class MenuCardEditButtonsComponent implements OnInit {
   }
 
   isFormDirty() {
-    if (this.updateForm.dirty) {
-      if (this.updateForm.get('inputTitle').value == this.menu.title)
-        return false;
-      else
-        return true;
-    }
+    if (this.updateForm.get('inputTitle').value !== this.menu.title || this.updateForm.get('inputImage'))
+      return true;
     else
       return false;
   }

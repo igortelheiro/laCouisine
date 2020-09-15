@@ -2,11 +2,8 @@
   "database": {
     "rules": "database.rules.json"
   },
-  "storage": {
-    "rules": "storage.rules"
-  },
   "hosting": {
-    "public": "dist/appveneza",
+    "public": "dist/lacuisine",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -18,5 +15,8 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }

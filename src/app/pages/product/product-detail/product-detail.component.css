@@ -1,5 +1,5 @@
 .card {
-  width: 28vw;
+  width: 26vw;
 }
 
 
@@ -42,7 +42,7 @@ span {
 
 
 
-@media only screen and (max-width: 699px) {
+@media only screen and (max-width: 749px) {
   .card {
     width: 50vw;
   }
@@ -58,9 +58,9 @@ span {
 }
 
 
-@media only screen and (min-width: 700px) and (max-width: 1199px) {
+@media only screen and (min-width: 750px) and (max-width: 1199px) {
   .card {
-    width: 30vw;
+    width: 40vw;
   }
 
   .card-img-top {

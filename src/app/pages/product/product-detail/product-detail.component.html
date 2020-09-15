@@ -1,9 +1,9 @@
-<div *ngIf="product.name !== 'Adicionar produto' && !productOnUpdate">
+<div *ngIf="productView.name !== 'Adicionar produto' && !productOnUpdate">
   <div class="card">
-    <img class="card-img-top" [src]="product.imagePath" [alt]="product.name" style="border-radius: 3px;">
+    <img class="card-img-top" [src]="productView.imageUrl || productView.imagePath" [alt]="productView.name" style="border-radius: 3px;">
     <div class="card-body">
-      <span class="card-text highlight">{{ product.name }}</span>
-      <span class="card-text highlight">R$ {{ product.price | number: '1.2-2' }}</span>
+      <span class="card-text highlight">{{ productView.name }}</span>
+      <span class="card-text highlight">R$ {{ productView.price | number: '1.2-2' }}</span>
     </div>
   </div>
 
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <span><img src="../../../../assets/utilities/watch.svg" alt="relógio" style="margin-right: 5px;">{{ product.productionTime }} {{ product.productionTimeUnit }}</span>
+    <span><img src="../../../../assets/utilities/watch.svg" alt="relógio" style="margin-right: 5px;">{{ productView.productionTime }} {{ productView.productionTimeUnit }}</span>
   </div>
 
   <div class="ingredients">
@@ -28,7 +28,7 @@
     Ingredientes:
 
     <ol>
-      <li *ngFor="let ingredient of product.ingredients">
+      <li *ngFor="let ingredient of productView.ingredients">
         {{ ingredient.name }}
         {{ ingredient.amount }}
         {{ ingredient.measure }}
@@ -39,5 +39,5 @@
 
 
 
-<app-product-form *ngIf="product.name === 'Adicionar produto'" mode="create"></app-product-form>
+<app-product-form *ngIf="productView.name === 'Adicionar produto'" mode="create"></app-product-form>
 <app-product-form *ngIf="productOnUpdate" mode="update"></app-product-form>

@@ -4,6 +4,8 @@ export class Menu {
 
     public imagePath: string,
 
+    public imageUrl: string,
+
     public id?: string,
   ) { }
 }

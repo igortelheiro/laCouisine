@@ -1,8 +1,9 @@
-import { Subscription } from 'rxjs';
+import { CloudStorageService } from './../../../../services/cloudStorage.service';
 import { Component, OnInit, Input } from '@angular/core';
+import { Subscription } from 'rxjs';
 
-import { ProductService } from './../../../../services/product.service';
 import { Product } from './../../../../models/product.model';
+import { ProductService } from './../../../../services/product.service';
 
 @Component({
   selector: 'app-product-card',
@@ -17,7 +18,10 @@ export class ProductCardComponent implements OnInit {
   productView: Product;
   productViewChangesSub: Subscription;
 
-  constructor(private productService: ProductService) { }
+  imageToBeLoaded: string;
+
+  constructor(private productService: ProductService, private cloudStorageService: CloudStorageService) { }
+
 
   ngOnInit(): void {
     this.productView = this.productService.productOnView;
@@ -26,7 +30,6 @@ export class ProductCardComponent implements OnInit {
 
 
   changeProductView(product: Product) {
-    this.productService.changeProductView(product);
+    this.productService.changeProductAtView(product);
   }
-
 }

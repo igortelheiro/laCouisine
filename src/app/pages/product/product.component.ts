@@ -1,5 +1,5 @@
 import { ProductService } from './../../services/product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -11,11 +11,11 @@ import { ProductDataService } from 'src/app/services/product-data.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, OnDestroy {
   productCategory: string;
 
-  productList: Product[];
-  productListChnagesSub: Subscription;
+  productView: Product;
+  productViewChangesSub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,10 +24,15 @@ export class ProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.productCategory = this.route.snapshot.params['produto'];
-    this.productService.changeProductView(this.productDataService.productList[0]);
 
-    this.productList = this.productDataService.productList;
-    this.productListChnagesSub = this.productDataService.productListChanges.subscribe(newProductList => this.productList = newProductList);
+    this.productDataService.fetchProducts();
+
+    this.productView = this.productService.productOnView;
+    this.productViewChangesSub = this.productService.productOnViewChanges.subscribe(product => this.productView = product);
+
   }
 
+  ngOnDestroy() {
+    this.productViewChangesSub.unsubscribe();
+  }
 }

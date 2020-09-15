@@ -1,7 +1,6 @@
 form, .card {
-  width: 28vw;
+  width: 26vw;
 }
-
 
 .card-body {
   background-color: #f2f2f2;
@@ -11,14 +10,9 @@ form, .card {
   justify-content: space-between;
 }
 
-.input-sm {
-  width: 5vw;
-}
-.input-md {
-  width: 10vw;
-}
-.input-lg {
-  width: 15vw;
+.form-control-sm, .custom-select-sm, input:focus {
+  border: 1px solid #d2d2d2;
+  outline: none!important;
 }
 
 .line {
@@ -55,6 +49,8 @@ form label {
   margin: 0;
 }
 
+
+/* IMAGE PREVIEW */
 form label img:hover {
   cursor: pointer;
   padding: 5px;
@@ -63,8 +59,8 @@ form label img:hover {
 }
 
 form .btn.ingredient img {
-  width: 1.2vw;
-  height: 1.2vw;
+  width: 1vw;
+  height: 1vw;
 }
 
 
@@ -84,16 +80,6 @@ form .btn.ingredient img {
     display: block;
   }
 
-  .input-sm {
-    width: 15vw;
-  }
-  .input-md {
-    width: 25vw;
-  }
-  .input-lg {
-    width: 35vw;
-  }
-
   form .btn.ingredient img {
     width: 3vw;
     height: 3vw;
@@ -102,12 +88,16 @@ form .btn.ingredient img {
   ol {
     padding: 0;
   }
+
+  #inputPrice {
+    text-align: left!important;
+  }
 }
 
 
-@media only screen and (min-width: 850px) and (max-width: 1199px) {
+@media only screen and (min-width: 750px) and (max-width: 1199px) {
   form, .card {
-    width: 30vw;
+    width: 40vw;
   }
 
   .card-img-top {
@@ -124,18 +114,20 @@ form .btn.ingredient img {
     display: block;
   }
 
-  .input-sm {
-    width: 6vw;
-  }
-  .input-md {
-    width: 11vw;
-  }
-  .input-lg {
-    width: 16vw;
-  }
-
   form .btn.ingredient img {
     width: 2vw;
     height: 2vw;
+  }
+
+  #inputPrice {
+    text-align: left!important;
+  }
+}
+
+
+@media only screen and (min-width: 1200px) {
+  #inputPrice {
+    width: 50%;
+    text-align: right;
   }
 }

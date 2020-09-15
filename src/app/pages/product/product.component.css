@@ -20,7 +20,7 @@
 
 
 
-@media only screen and (max-width: 699px) {
+@media only screen and (max-width: 749px) {
   .breadcrumb {
     margin: 15px 10px;
     padding: 0;
@@ -34,7 +34,7 @@
 }
 
 
-@media only screen and (min-width: 700px) and (max-width: 1199px) {
+@media only screen and (min-width: 750px) and (max-width: 1199px) {
   .breadcrumb {
     margin: 10px;
   }

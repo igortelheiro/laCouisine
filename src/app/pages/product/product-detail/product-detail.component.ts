@@ -1,3 +1,5 @@
+import { ProductDataService } from 'src/app/services/product-data.service';
+import { CloudStorageService } from './../../../services/cloudStorage.service';
 import { ProductService } from './../../../services/product.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -11,7 +13,7 @@ import { Product } from './../../../models/product.model';
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit, OnDestroy {
-  product: Product;
+  productView: Product;
   productViewChangesSub: Subscription;
 
   productOnUpdate: Product;
@@ -19,13 +21,13 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   productAddForm: FormGroup;
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private productDataService: ProductDataService) { }
 
   ngOnInit(): void {
-    this.product = this.productService.productOnView;
+    this.productView = this.productService.productOnView;
     this.productViewChangesSub = this.productService.productOnViewChanges.subscribe(newProductView => {
-      this.product = newProductView;
-      this.productService.changeProductUpdate(null);
+      this.productView = newProductView;
+      this.productService.changeProductOnUpdate(null);
     });
 
     this.productOnUpdate = this.productService.productOnUpdate;
@@ -34,17 +36,17 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
 
   onSwitchUpdateCard() {
-    this.productService.changeProductUpdate(this.product);
+    this.productService.changeProductOnUpdate(this.productView);
   }
 
 
   onDeleteProduct() {
-    console.log('deleted');
+    this.productDataService.deleteMenu(this.productView);
   }
 
 
   ngOnDestroy() {
-    this.productService.changeProductUpdate(null);
+    this.productService.changeProductOnUpdate(null);
 
     this.productViewChangesSub.unsubscribe();
     this.productOnUpdateChangesSub.unsubscribe();

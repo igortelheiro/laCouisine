@@ -42,9 +42,8 @@ export class MenuComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    if (this.menuEditMode) {
+    if (this.menuEditMode)
       this.menuService.switchEditMode();
-    }
 
     this.menuListChangesSub.unsubscribe();
     this.menuEditModeChangesSub.unsubscribe();
